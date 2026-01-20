@@ -1,0 +1,1 @@
+## In this type of recursion, each function call must wait for the result of the nested call to perform its task, so the compiler must save each fuction's state on the call stack
