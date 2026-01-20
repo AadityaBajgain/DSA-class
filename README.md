@@ -2,7 +2,7 @@
 
 Curated notes, code, and examples from my Data Structures class.
 
-## Current focus
+## Concepts Taught Till Now
 - Recursion
 
 ## Coming soon
