@@ -8,6 +8,17 @@ class CircularLinkedList:
         self.head = None
         self.tail = None
         self.length = 0
+    def __str__(self):
+        temp = self.head
+        result =""
+        
+        while temp:
+            result += str(temp.value)
+            result += " -> "
+            temp = temp.next
+            if temp == self.head:
+                break
+        return result
     
     def append(self, val):
         new_node = Node(val)
@@ -31,3 +42,5 @@ print(cir_linked_list.head.value)
 print(cir_linked_list.head.next.value)
 print(cir_linked_list.tail.value)
 print(cir_linked_list.tail.next.value)
+
+print(cir_linked_list)
