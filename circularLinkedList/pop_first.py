@@ -88,42 +88,37 @@ class CircularLinkedList:
                 return None
         
     def get(self, index):
-        if index == 0:
-            return self.head
-        if index == -1 or index == self.length - 1:
+        if index == -1:
             return self.tail
         if index < -1 or index >= self.length:
             return None
+        if index == 0:
+            return self.head
+        if index == self.length - 1:
+            return self.tail
         temp = self.head
         for _ in range(index):
             temp = temp.next
         
         return temp
         
-    def set(self,index, val):
-        if index < -1 or index >= self.length:
-            return None
         
+    def pop_first(self) -> Node:
         temp = self.head
-        new_node = Node(val)
-        if index == 0:
-            new_node.next = temp
-            self.head = new_node
-        if index == -1:
-            while temp.next != self.head:
-                temp = temp.next
-            temp.next = new_node
-            self.tail = new_node
-
-        else:
-            for _ in range(index - 1):
-                temp = temp.next
+        if not self.head: 
+            return None
+        if self.length == 1:
+            self.head = None
+            self.tail = None
             
-            new_node.next = temp.next
-            temp.next = new_node
-        self.length += 1
+        else:    
+            self.head = self.head.next
+            self.tail.next = self.head
+            temp.next = None
         
-        
+        self.length -= 1
+        return temp
+    
 cir_linked_list = CircularLinkedList()
 cir_linked_list.append(50)
 cir_linked_list.append(40)
@@ -149,7 +144,5 @@ print(cir_linked_list.search(70))
 
 print(cir_linked_list.get(5).value)
 
-cir_linked_list.set(-1, 70)
-
-print(cir_linked_list.length)
-print(cir_linked_list)
+print(cir_linked_list.pop_first().value)
+print(cir_linked_list.tail.next.value)
