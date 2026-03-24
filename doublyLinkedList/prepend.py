@@ -1,0 +1,54 @@
+class Node:
+    def __init__(self, val):
+        self.value = val
+        self.next = None
+        self.prev = None
+    
+class DoublyLinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+        self.length = 0
+    def append(self, val):
+        new_node = Node(val)
+        if not self.head:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            self.tail.next = new_node
+            new_node.prev = self.tail
+            self.tail = new_node
+        self.length += 1
+        
+        
+    def prepend(self, value):
+        new_node = Node(value)
+        
+        if not self.head:
+            self.head = new_node
+            self.tail = new_node
+        else:
+            new_node.next = self.head
+            self.head.prev = new_node
+            self.head = new_node
+        self.length += 1
+        
+    def __str__(self):
+        temp = self.head
+        result =""
+        while temp != None:
+            result += str(temp.value)
+            if temp.next != None:
+                result += " <-> "
+            temp = temp.next
+        return result
+    
+    
+    
+dll = DoublyLinkedList()
+dll.append(10)
+dll.append(20)
+dll.append(30)
+dll.append(40)
+dll.prepend(5)
+print(dll)
