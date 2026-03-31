@@ -41,6 +41,35 @@ class DoublyCircularLinkedList:
         self.length += 1
 
 
+    def prepend(self,val):
+        new_node = Node(val)
+        if self.head == None:
+            self.head = new_node
+            self.tail = new_node
+            self.head.prev = self.tail
+            self.tail.next = self.head
+        else:
+            new_node.next = self.head
+            self.head.prev = new_node
+            self.tail.next = new_node
+            self.head = new_node
+            self.head.prev = self.tail
+        self.length += 1
+
+    def search(self, target):
+        if self.head is None:
+            return None
+        else:
+            temp = self.head
+            while temp:
+                if temp.value == target:
+                    return True
+                if temp.next == self.head:
+                    break
+                temp = temp.next
+            return False
+            
+        
 if __name__ == "__main__":
     dcl = DoublyCircularLinkedList()
     dcl.append(10)
@@ -51,3 +80,6 @@ if __name__ == "__main__":
     dcl.append(60)
     print(dcl.head.prev.value)
     print(dcl)
+    dcl.prepend(5)
+    print(dcl.tail.next.value)
+    print(dcl.search(50))
