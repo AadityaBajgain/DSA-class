@@ -1,7 +1,7 @@
 from random import randint
 
 class Node:
-    def __init__(self, val):
+    def __init__(self, val = None):
         self.value = val
         self.next = None
         self.prev = None
