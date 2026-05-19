@@ -47,15 +47,28 @@ class BinaryTree:
         for i in range(1,self.last_used_index + 1):
             print(self.custom_list[i])
     
+    def delete_node(self, node_val):
+        if not self.custom_list:
+            return "No binary tree"
+        temp_node = self.custom_list[self.last_used_index]
+        for i in range(1,self.last_used_index+1):
+            if self.custom_list[i] == node_val:
+                self.custom_list[i] = temp_node
+                self.custom_list.pop()
+                self.last_used_index -= 1
+                return temp_node
+        
 new_bt = BinaryTree(5) 
 new_bt.insert_node("Drinks")
 new_bt.insert_node("Hot")
 new_bt.insert_node("Cold")
-print(new_bt.node_search("Hot"))
+# print(new_bt.node_search("Hot"))
 
 # new_bt.pre_order_traversal()
 
 # new_bt.in_order_traversal()
 # new_bt.post_order_traversal()
 
+
+new_bt.delete_node("Cold")
 new_bt.level_order_traversal()
