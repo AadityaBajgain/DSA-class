@@ -52,3 +52,60 @@ def search_node(root, node_val):
         return search_node(root.left, node_val)
     else:
         return search_node(root.right, node_val)
+    
+def get_height(root):
+    if not root:
+        return 0
+    return root.height
+
+def get_balance(root):
+    if not root:
+        return
+    return get_height(root.left) - get_height(root.right)
+
+def rotate_left(root):
+    new_node = root.right
+    root.right = new_node.left
+    new_node.left = root
+    
+    root.height = 1 + max(get_height(root.left) , get_height(root.right))
+    new_node.height = 1 + max(get_height(new_node.left) , get_height(new_node.right))
+    
+    return new_node
+
+def rotate_right(root):
+    new_node = root.left
+    root.left = new_node.right
+    
+    new_node.right = root
+    
+    root.height = 1 + max(get_height(root.left) , get_height(root.right))
+    new_node.height = 1 + max(get_height(new_node.left) , get_height(new_node.right))
+    
+    return new_node
+
+
+def insert_node(root, key):
+    if not root:
+        return AVL_tree(key)
+    elif root.data > key:
+        root.left = insert_node(root.left, key)
+    else:
+        root.right = insert_node(root.right, key)
+    
+    root.height = 1 + max(get_height(root.left),get_height(root.rigth))
+    
+    balance = get_balance(root)
+    
+    if balance > 1 and root.left.data > key:
+        return rotate_right(root)
+    if balance > 1 and root.left.data < key:
+        root.left = rotate_left(root.left)
+        return rotate_right(root)
+    if balance < -1 and root.right.data < key:
+        return rotate_left(root)
+    if balance < -1 and root.right.data > key:
+        root.right = rotate_right(root.right)
+        return rotate_left(root)
+    
+    return root
