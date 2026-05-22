@@ -5,7 +5,7 @@ class AVL_tree:
         self.data = val
         self.left = None
         self.right = None
-        self.height = None
+        self.height = 1
     
 
 def in_order_traversal(root):
@@ -60,7 +60,7 @@ def get_height(root):
 
 def get_balance(root):
     if not root:
-        return
+        return 0
     return get_height(root.left) - get_height(root.right)
 
 def rotate_left(root):
@@ -93,7 +93,7 @@ def insert_node(root, key):
     else:
         root.right = insert_node(root.right, key)
     
-    root.height = 1 + max(get_height(root.left),get_height(root.rigth))
+    root.height = 1 + max(get_height(root.left),get_height(root.right))
     
     balance = get_balance(root)
     
@@ -109,3 +109,21 @@ def insert_node(root, key):
         return rotate_left(root)
     
     return root
+
+
+my_avl = AVL_tree(30)
+my_avl = insert_node(my_avl,25)
+my_avl = insert_node(my_avl,35)
+my_avl = insert_node(my_avl,20)
+my_avl = insert_node(my_avl,15)
+my_avl = insert_node(my_avl,5)
+my_avl = insert_node(my_avl,10)
+my_avl = insert_node(my_avl,50)
+my_avl = insert_node(my_avl,60)
+my_avl = insert_node(my_avl,70)
+my_avl = insert_node(my_avl,65)
+
+
+
+pre_order_traversal(my_avl)
+# print(get_height(my_avl))
