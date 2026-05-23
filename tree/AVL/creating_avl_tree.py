@@ -32,8 +32,7 @@ def post_order_traversal(root):
 def level_order_traversal(root):
     if not root:
         return
-    queue = deque(([root]))
-    
+    queue = deque([root])
     while queue:
         current = queue.popleft()
         print(current.data)
@@ -52,7 +51,7 @@ def search_node(root, node_val):
         return search_node(root.left, node_val)
     else:
         return search_node(root.right, node_val)
-    
+
 def get_height(root):
     if not root:
         return 0
@@ -111,6 +110,46 @@ def insert_node(root, key):
     return root
 
 
+
+def delete_node(root, key):
+    if not root:
+        return root
+    elif key < root.data:
+        root.left = delete_node(root.left, key)
+    elif key > root.data:
+        root.right = delete_node(root.right, key)
+    else:
+        if root.left is None:
+            return root.right
+        if root.right is None:
+            return root.left
+        
+        curr = root.right
+        while curr.left:
+            curr = curr.left
+        root.data = curr.data
+        
+        root.right = delete_node(root.right, curr.data)
+        
+    root.height = 1 + max(get_height(root.left), get_height(root.right))
+    
+    if not root:
+        return root
+    balance = get_balance(root)
+    
+    if balance > 1 and get_balance(root.left) >= 0:
+        return rotate_right(root)
+    if balance > 1 and get_balance(root.right) <= 0:
+        root.left = rotate_left(root.left)
+        return rotate_right(root)
+    if balance < -1 and get_balance(root.right) > 0:
+        return rotate_left(root)
+    if balance < -1 and get_balance(root.right)<0:
+        root.right = rotate_right(root.right)
+        return rotate_left(root)
+    return root
+    
+
 my_avl = AVL_tree(30)
 my_avl = insert_node(my_avl,25)
 my_avl = insert_node(my_avl,35)
@@ -126,4 +165,9 @@ my_avl = insert_node(my_avl,65)
 
 
 pre_order_traversal(my_avl)
-# print(get_height(my_avl))
+
+my_avl = delete_node(my_avl, 50)
+
+print("--"*40)
+
+level_order_traversal(my_avl)
