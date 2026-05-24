@@ -150,6 +150,12 @@ def delete_node(root, key):
     return root
     
 
+def delete_AVL(root):
+    root.data = None
+    root.left = None
+    root.right = None
+    
+
 my_avl = AVL_tree(30)
 my_avl = insert_node(my_avl,25)
 my_avl = insert_node(my_avl,35)
@@ -170,4 +176,7 @@ my_avl = delete_node(my_avl, 50)
 
 print("--"*40)
 
+level_order_traversal(my_avl)
+
+delete_AVL(my_avl)
 level_order_traversal(my_avl)
