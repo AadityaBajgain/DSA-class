@@ -37,40 +37,63 @@ class Trie:
                 return False
             current = node
         
-        if current.end_of_string == True:
-            return True
-        else:
-            return False
-    def delete_string(self,root, word, index = 0):
-        ch = word[index]
-        current = root.children[ch]
-        can_this_node_be_deleted = False
+        return current.end_of_string
+
+    def has_prefix(self, prefix):
+        current = self.root
         
-        if len(current.children) > 1:
-            self.delete_string(current,word, index+1)
-            return False
-        if index == len(word) - 1:
-            if len(current.children) >= 1:
-                current.end_of_string = False
+        for c in prefix:
+            if c not in current.children:
                 return False
-            else:
-                root.children.pop(ch)
-                return True
-        if current.end_of_string == True:
-            self.delete_string(current,word, index+1)
+            current = current.children[c]
+        return True
+
+    def delete_word(self,word):
+        def _delete(current_node,word, index):
+            
+            # case 1: the node is at the leaf of the tree
+            if index == len(word):
+                
+                # this marks node as the end of the word
+                if not current_node.end_of_string:
+                    return False
+                
+                current_node.end_of_string = False
+                
+                # this will allow the function to delete it, as it does not have any children
+                return len(current_node.children) == 0
+            
+            
+            # this will take every character at the given index
+            c = word[index]
+            
+            node = current_node.children.get(c)
+            
+            # if the node is None, word does not exist, so return False
+            if node is None:
+                return False
+            
+    
+            delete_current_node = _delete(node, word, index + 1)
+            
+            
+            if delete_current_node:
+                del current_node.children[c]
+                
+                # this makes sure that current node having other children and prefix for other word is not deleted
+                return len(current_node.children) == 0 and not current_node.end_of_string
+            
             return False
         
-        can_this_node_be_deleted = self.delete_string(current,word,index+1)
-        if can_this_node_be_deleted == True:
-            root.children.pop(ch)
-            return True
-        else:
-            return False
-
-
-    
+        _delete(self.root, word, 0)
+        
+        
 newTrie = Trie()
 newTrie.insert("App")
+newTrie.insert("Api")
 newTrie.insert("Appl")
-newTrie.delete_string(newTrie,"App")
-print(newTrie.searchString("App"))
+print(newTrie.search_string("App"))
+
+print(newTrie.search_string("Api"))
+newTrie.delete_word("Api")
+print(newTrie.search_string("Api"))
