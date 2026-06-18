@@ -27,9 +27,7 @@ class LinkedList:
             if self.head.next is not None:
                 result+=" -> "
             self.head = self.head.next
-            
         return result
-    
 
 new_linked_list = LinkedList()
 new_linked_list.append(10)
