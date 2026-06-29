@@ -22,5 +22,3 @@ def merge_same_arr(arr,l,m,h):
         
     for k in range(len(temp)):
         arr[l + k] = temp[k]
-        
-    
